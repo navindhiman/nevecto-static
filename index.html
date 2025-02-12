@@ -87,6 +87,32 @@
         </section>
     </main>
 
+    <!-- Interest List Section -->
+    <section class="bg-blue-50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold mb-4">Stay Updated</h2>
+                <p class="text-gray-600 mb-8">Join our interest list to be notified when we launch new AI agents.</p>
+                <form id="interestForm" class="max-w-md mx-auto">
+                    <div class="flex gap-4">
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                            class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                        <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Notify Me
+                        </button>
+                    </div>
+                    <p id="formMessage" class="mt-4 text-sm"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <footer class="bg-gray-50 border-t border-gray-200">
         <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -245,6 +271,34 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateAgentsDisplay();
             document.getElementById('searchInput').addEventListener('input', updateAgentsDisplay);
+        });
+
+        // Interest Form Handling
+        document.getElementById('interestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const messageElement = document.getElementById('formMessage');
+            
+            try {
+                const response = await fetch('https://formspree.io/f/xwpvnbzg', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
+
+                if (response.ok) {
+                    messageElement.textContent = 'Thank you for joining our interest list!';
+                    messageElement.className = 'mt-4 text-sm text-green-600';
+                    document.getElementById('email').value = '';
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                messageElement.textContent = 'Sorry, there was an error. Please try again.';
+                messageElement.className = 'mt-4 text-sm text-red-600';
+            }
         });
     </script>
 </body>
