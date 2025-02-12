@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nevecto - AI Agents Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .agent-card {
+            transition: transform 0.2s;
+        }
+        .agent-card:hover {
+            transform: translateY(-4px);
+        }
+        .coming-soon {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .gradient-header {
+            background: linear-gradient(180deg, #ffffff 0%, rgba(59, 130, 246, 0.05) 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white">
+    <!-- New Header -->
+    <header class="fixed w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-1">
+                    <span class="font-bold text-xl">Nevecto</span>
+                    <i data-lucide="arrow-up" class="h-4 w-4"></i>
+                </div>
+                <nav>
+                    <a href="./index.html" class="text-gray-600 hover:text-gray-900">Home</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <header class="gradient-header pb-16 pt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
+                <div class="mb-8">
+                    <span class="inline-flex items-center gap-1 bg-black px-3 py-1.5 rounded-md">
+                        <span class="font-bold text-white">Nevecto</span>
+                        <i data-lucide="arrow-up" class="h-4 w-4 text-white"></i>
+                    </span>
+                </div>
+                <h1 class="text-4xl font-bold tracking-tight sm:text-6xl">
+                    Next-gen jobs marketplace for hiring AI agents
+                </h1>
+                <p class="mt-6 text-lg text-gray-600">
+                    Supercharge your productivity with AI agents that handle your repetitive tasks effortlessly—giving you more time, efficiency, and a competitive edge
+                </p>
+                <div class="mt-8">
+                    <button onclick="scrollToAgents()" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="agents-section" class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col space-y-4">
+                    <div class="w-full max-w-lg">
+                        <input 
+                            type="search" 
+                            id="searchInput"
+                            placeholder="Search agents by name, description, or capabilities..."
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                    </div>
+
+                    <div id="agentsGrid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        <!-- Agents will be dynamically inserted here -->
+                    </div>
+
+                    <div id="noResults" class="hidden text-center py-8 text-gray-600">
+                        No agents found matching your search criteria
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="font-bold text-xl">Nevecto</span>
+                        <i data-lucide="arrow-up" class="h-4 w-4"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Next-gen jobs marketplace for hiring AI agents. Supercharge your productivity with AI agents that handle your repetitive tasks.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <i data-lucide="twitter" class="h-6 w-6"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <i data-lucide="linkedin" class="h-6 w-6"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <i data-lucide="github" class="h-6 w-6"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Product</h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Features</a></li>
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Pricing</a></li>
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Marketplace</a></li>
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">API</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">About</a></li>
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Blog</a></li>
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Careers</a></li>
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom section -->
+            <div class="mt-12 pt-8 border-t border-gray-200">
+                <p class="text-base text-gray-400 text-center">
+                    © 2025 Nevecto. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        const agents = [
+            {
+                title: "Invoice Analyst",
+                description: "Automatically analyze and validate invoices using advanced AI. Get instant feedback on potential issues.",
+                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c",
+                status: "active",
+                link: "./agents/invoice-analysis",
+                metadata: ["document-processing", "finance", "automation"]
+            },
+            {
+                title: "Intelligent Expense Manager",
+                description: "AI-powered expense review against company policies. Automatically validate and process expense claims.",
+                image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85",
+                status: "active",
+                link: "./agents/expense-manager",
+                metadata: ["finance", "automation", "compliance"]
+            },
+            {
+                title: "Customer Support",
+                description: "AI-powered customer support agent that handles inquiries 24/7 (Coming Soon)",
+                image: "https://images.unsplash.com/photo-1534536281715-e28d76689b4d",
+                status: "coming_soon",
+                link: "/agents/customer-support",
+                metadata: ["customer-service", "communication", "support"]
+            },
+            {
+                title: "Lead Generation",
+                description: "Generate and qualify sales leads automatically using advanced AI (Coming Soon)",
+                image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43",
+                status: "coming_soon",
+                link: "/agents/lead-generation",
+                metadata: ["sales", "marketing", "automation"]
+            },
+            {
+                title: "Draft Memos",
+                description: "Create professional business memos and documents with AI assistance (Coming Soon)",
+                image: "https://images.unsplash.com/photo-1551721434-8b94ddff0e6d",
+                status: "coming_soon",
+                link: "/agents/draft-memos",
+                metadata: ["writing", "documentation", "business"]
+            },
+            {
+                title: "Contract Reviewer",
+                description: "AI-powered contract analysis and risk assessment (Coming Soon)",
+                image: "https://images.unsplash.com/photo-1616161560417-66d4db5892ec",
+                status: "coming_soon",
+                link: "/agents/contract-reviewer",
+                metadata: ["legal", "document-processing", "analysis"]
+            }
+        ];
+
+        function createAgentCard(agent) {
+            const isComingSoon = agent.status === "coming_soon";
+            return `
+                <div class="agent-card ${isComingSoon ? 'coming-soon' : ''} bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="${agent.image}" alt="${agent.title}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold">${agent.title}</h3>
+                        <p class="mt-2 text-gray-600">${agent.description}</p>
+                        ${!isComingSoon ? `
+                            <a href="${agent.link}/index.html" class="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                Learn More
+                            </a>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterAgents(query) {
+            if (!query) return agents;
+            query = query.toLowerCase();
+            return agents.filter(agent =>
+                agent.title.toLowerCase().includes(query) ||
+                agent.description.toLowerCase().includes(query) ||
+                agent.metadata.some(tag => tag.toLowerCase().includes(query))
+            );
+        }
+
+        function updateAgentsDisplay() {
+            const query = document.getElementById('searchInput').value;
+            const filteredAgents = filterAgents(query);
+            const agentsGrid = document.getElementById('agentsGrid');
+            const noResults = document.getElementById('noResults');
+
+            agentsGrid.innerHTML = filteredAgents.map(createAgentCard).join('');
+            noResults.classList.toggle('hidden', filteredAgents.length > 0);
+        }
+
+        function scrollToAgents() {
+            document.getElementById('agents-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize the display
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAgentsDisplay();
+            document.getElementById('searchInput').addEventListener('input', updateAgentsDisplay);
+        });
+    </script>
+</body>
+</html>
