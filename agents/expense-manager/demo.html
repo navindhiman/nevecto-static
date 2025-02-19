@@ -158,9 +158,23 @@
         // Initialize Lucide icons
         lucide.createIcons();
 
-        function checkPassword() {
+        // The hashed version of 'newvector' using SHA-256
+        const HASHED_PASSWORD = '7f5c9c3b329cd6a0c95c8e95f13516c8e2f5744f0c178c073a12c3ec6462432d';
+
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        async function checkPassword() {
             const password = document.getElementById('password').value;
-            if (password === 'newvector') {
+            const hashedInput = await hashPassword(password);
+            
+            if (hashedInput === HASHED_PASSWORD) {
                 document.getElementById('video-container').classList.remove('hidden');
                 document.getElementById('password-form').classList.add('hidden');
             } else {
